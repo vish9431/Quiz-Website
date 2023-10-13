@@ -1,0 +1,80 @@
+{% extends 'instructor/base.html' %}
+{% load static %}
+
+{% block title %}Quiz{% endblock %}
+
+{% block content %}
+
+<section class="banner inner-page">
+            <div class="banner-img"><img src="{% static 'images/banner/quiz.jpg' %}" alt=""></div>
+            <div class="page-title">
+                <div class="container">
+                    <h1>Quiz</h1>
+                </div>
+            </div>
+        </section>
+        <section class="breadcrumb white-bg">
+            <div class="container">
+                <ul>
+                    <li><a href="/instructor">Home</a></li>
+                    <li><a href="/instructor/make-quiz">Quiz</a></li>
+                </ul>
+            </div>
+        </section>
+        <section class="quiz-view">
+            <div class="container">
+                <div class="quiz-title">
+                    <h2>{{ title }}</h2>
+                </div>
+                <div class="row">
+
+                        <div class="qustion-main">
+                            <form method="POST" action="{% url 'make-quiz' %}">
+                            {% for i in count %}
+                                <div class="qustion-box">
+                                    <div class="qustion "><b>Question {{ i }}:  </b><textarea class="form-control" name="ques-{{ i }}"
+                                            placeholder="Question {{ i }}: "></textarea></div>
+                                    <div class="qustion"><b>Mark:</b>
+                                    <input type="text" class="form-control" name="mark-{{ i }}" size="10" style="width: 10%;" required></div>
+                                    <div class="ans">
+                                        <br />
+                                        <div class="ans-slide">
+                                            <label for="text-01">Option 1:  <input type="text" class="form-control" name="option1-{{ i }}" size="40"
+                                                    placeholder="Option 1: ">
+                                            </label><br />
+                                        </div>
+                                        <div class="ans-slide">
+                                            <label for="text-02">Option 2:  <input type="text" class="form-control" name="option2-{{ i }}" size="40"
+                                                placeholder="Option 2: ">
+                                        </label><br />
+                                        </div>
+                                        <div class="ans-slide">
+                                            <label for="text-03">Option 3:  <input type="text" class="form-control" name="option3-{{ i }}" size="40"
+                                                placeholder="Option 3: ">
+                                        </label><br />
+                                        </div>
+                                        <div class="ans-slide">
+                                            <label for="text-04">Option 4:  <input type="text" class="form-control" name="option4-{{ i }}" size="40"
+                                                placeholder="Option 4: ">
+                                        </label><br />
+                                        </div>
+                                        <div class="ans-slide">
+                                            <label for="text-05">Answer:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" class="form-control" name="ans-{{ i }}" size="40"
+                                                placeholder="Answer: ">
+                                        </label><br />
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+
+                                {% csrf_token %}
+                            <div class="submit-quiz">
+                                <button class="btn" name="submit" value="Submit Quiz">Submit Quiz</button>
+                            </div>
+                                </form>
+                        </div>
+                </div>
+            </div>
+        </section>
+
+{% endblock %}

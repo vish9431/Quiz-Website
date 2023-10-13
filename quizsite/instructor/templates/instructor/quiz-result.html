@@ -1,0 +1,64 @@
+{% extends 'instructor/base.html' %}
+{% load static %}
+
+{% block title %}Result {% endblock %}
+
+{% block content %}
+
+<section class="banner inner-page">
+        	<div class="banner-img"><img src="{% static 'images/banner/quiz.jpg' %}" alt=""></div>
+            <div class="page-title">
+	            <div class="container">
+                    <h1>Quiz Result</h1>
+                </div>
+            </div>
+        </section>
+        <section class="breadcrumb white-bg">
+        	<div class="container">
+            	<ul>
+                	<li><a href="/instructor">Home</a></li>
+                    <li><a href="/instructor/quiz-list">Quiz</a></li>
+                </ul>
+            </div>
+        </section>
+        <section class="quiz-view">
+        	<div class="container">
+                <div class="quiz-title">
+                    <h2>{{ quiz.title }}</h2>
+                </div>
+                <div class="row">
+
+                    <div>
+                    	<div class="quiz-result">
+                        	<h3>Stats</h3>
+                            <div class="result-info">
+
+                            	<div class="info-slide">
+                                	<p><strong>Total Attempts:</strong><span>{{ quiz.attempt_count }}</span></p>
+                                </div>
+                                <div class="info-slide">
+                                	<p><strong>Difficulty:</strong><span>{{ quiz.difficulty }}</span></p>
+                                </div>
+                                <div class="info-slide">
+                                    <a href="/instructor/all-record?quiz_id={{ quiz.id }}" class="btn">Complete Record</a>
+                                </div>
+                            </div>
+                            <div class="leaderboard">
+                            	<h3>leaderboard</h3>
+                                 <div class="qustion-review">
+                                        <p><strong>USERNAME</strong><span><strong>SCORE</strong></span></p>
+                                    </div>
+                                {% for record in records %}
+                                    <div class="qustion-review">
+                                        <p>{{ record.user }}<span>{{ record.score }}</span></p>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+{% endblock %}

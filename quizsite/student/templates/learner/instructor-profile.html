@@ -1,0 +1,65 @@
+{% extends 'learner/base.html' %}
+{% load static %}
+
+{% block title %}Profile {% endblock %}
+
+{% block content %}
+
+<section class="banner inner-page">
+        	<div class="banner-img"><img src="{% static 'images/banner/instructor-profile.jpg' %}" alt=""></div>
+            <div class="page-title">
+	            <div class="container">
+                    <h1>Instructor Profile</h1>
+                </div>
+            </div>
+        </section>
+        <section class="breadcrumb">
+        	<div class="container">
+            	<ul>
+                	<li><a href="/learner">Home</a></li>
+                    <li><a href="/learner/instructor-list">Our Teacher</a></li>
+                    <li><a href="">instructor Profile</a></li>
+                </ul>
+            </div>
+        </section>
+        <section class="teacher-profile">
+        	<div class="container">
+            	<div class="teacher-name">
+                	<h3>{{ data.user.username }}</h3>
+                    <span>{{ data.name }}</span>
+                </div>
+                <div class="row">
+                	<div class="col-md-8">
+                    	<div class="img"><img src="{% static 'images/team-member/user-blank.png' %}" alt=""></div>
+                        <div class="teacher-info">
+                            <p>{{ data.bio }}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                    	<div class="profile-details">
+                        	<h4>Profile details</h4>
+                            <div class="details-slide">
+                            	<span>Gender:</span>
+                                <p>{{ data.gender }}</p>
+                            </div>
+                            <div class="details-slide">
+                            	<span>DOB:</span>
+                                <p>{{ data.dob }}</p>
+                            </div>
+                            <div class="details-slide">
+                            	<span>Phone:</span>
+                                <p>{{ data.phone_num }}</p>
+                            </div>
+                            <div class="details-slide">
+                            	<span>E-mail:</span>
+                                <p><a href="MailTo:{{ data.user.email }}">{{ data.user.email }}</a></p>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+{% endblock %}

@@ -1,0 +1,100 @@
+{% extends 'instructor/base.html' %}
+{% load static %}
+
+{% block title %}Edit Quiz{% endblock %}
+
+{% block head %}
+<style>
+    #hidden_div {
+        display: none;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<section class="banner inner-page">
+        	<div class="banner-img"><img src="{% static 'images/banner/quiz.jpg' %}" alt=""></div>
+            <div class="page-title">
+	            <div class="container">
+                    <h1>Quiz Intro</h1>
+                </div>
+            </div>
+        </section>
+        <section class="breadcrumb white-bg">
+        	<div class="container">
+            	<ul>
+                	<li><a href="/instructor">Home</a></li>
+                    <li><a href="/instructor/make-quiz">Quiz</a></li>
+                </ul>
+            </div>
+        </section>
+        <section class="quiz-view">
+        	<div class="container">
+                <div class="quiz-title">
+                    <h2>Make Quiz</h2>
+                </div>
+                <div class="row">
+                    <div class="col-sm-8 col-md-9">
+                    	<div class="quiz-intro">
+                        	<h3>Introduction</h3>
+                            <form id="form-id" method="POST" action="{% url 'make-quiz' %}">
+                                {% csrf_token %}
+                                <div class="qustion ">Quiz Title:  <input type="text" class="form-control" id="title" name="title"
+                                placeholder="Title "></div><br>
+
+                                <div class="qustion ">Quiz Description:  <textarea class="form-control" id="description" name="description"
+                                                                             placeholder="Description "></textarea></div><br>
+
+                            <div class="qustion ">Enter Number of Questions:  <input type="text" class="form-control" id="count" name="count"
+                                placeholder="Number of Questions "></div><br>
+
+                              <div class="qustion ">Enter time (in minutes):  <input type="text" class="form-control" id="time" name="time"
+                                placeholder="Time "></div><br>
+
+                                <div class="qustion ">Enter tags associated (',' separated):  <input type="text" class="form-control" id="tags" name="tags"
+                                placeholder="Tags "></div><br>
+
+                                <div class="input-box">
+                                Difficulty :
+                                <select class="form-select" id="inputGroupSelect01" name="difficulty">
+                                    <option value="easy" selected>easy</option>
+                                    <option value="medium">medium</option>
+                                    <option value="hard">hard</option>
+                                  </select>
+                            </div><br>
+
+                                <div class="input-box">
+                                    Type of Quiz:
+                                    <select class="form-select" id="inputGroupSelect02" name="type" onchange="showDiv('hidden_div', this)">
+                                        <option value="static" selected>static</option>
+                                        <option value="live">live</option>
+                                    </select>
+                                </div>
+
+                                <div class="input-box" id="hidden_div" style="display: none;">
+                                    Start Time:
+                                    <input type="datetime-local" class="form-control" id="time_start" name="time_start"><br>
+                                    End Time:
+                                    <input type="datetime-local" class="form-control" id="time_end" name="time_end"><br>
+                                </div>
+                            <div class="start-btn">
+                                <button type="submit" class="btn" name="make" value="Make Quiz">Make Quiz</button>
+                            </div>
+                                </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+{% endblock %}
+
+{% block script %}
+<script type="text/javascript">
+    function showDiv(divId, element) {
+        document.getElementById(divId).style.display = element.value == 'live' ? 'block' : 'none';
+    }
+</script>
+{% endblock %}

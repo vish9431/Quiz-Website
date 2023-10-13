@@ -1,0 +1,102 @@
+{% extends 'learner/base.html' %}
+{% load static %}
+
+{% block title %}Result{% endblock %}
+
+{% block head %}
+<script src="https://cdn.anychart.com/releases/8.0.1/js/anychart-core.min.js"></script>
+<script src="https://cdn.anychart.com/releases/8.0.1/js/anychart-pie.min.js"></script>
+{% endblock %}
+
+{% block content %}
+
+
+<section class="banner inner-page">
+        	<div class="banner-img"><img src="{% static 'images/banner/quiz.jpg' %}" alt=""></div>
+            <div class="page-title">
+	            <div class="container">
+                    <h1>Quiz Result</h1>
+                </div>
+            </div>
+        </section>
+        <section class="breadcrumb white-bg">
+        	<div class="container">
+            	<ul>
+                	<li><a href="/learner">Home</a></li>
+                    <li><a href="/learner/all-quiz">Quiz</a></li>
+                </ul>
+            </div>
+        </section>
+        <section class="quiz-view">
+        	<div class="container">
+                <div class="quiz-title">
+                    <h2>{{ quiz.title }}</h2>
+                </div>
+                <div class="row">
+
+                    <div>
+                    	<div class="quiz-result">
+                        	<h3>Stats</h3>
+                            <div class="result-info">
+
+                                <div id="container" style="width: 100%; height: 40vh;"></div>
+
+                            	<div class="info-slide">
+                                	<p>Score<span>{{ model.score }}/{{ quiz.total_marks }}</span></p>
+                                </div>
+                                <div class="info-slide">
+                                	<p>Rating Effect<span>{{ model.rating_diff }}</span></p>
+                                </div>
+                                <div class="info-slide">
+                                	<p>Time Taken<span>{{ time_taken }}</span></p>
+                                </div>
+                                <div class="info-slide">
+                                    <a href="/learner/quiz-review?quiz_id={{ quiz.id }}" class="btn">Review Quiz</a>
+                                </div>
+                            </div>
+                            <div class="leaderboard">
+                            	<h3>leaderboard</h3>
+                                {% for record in records %}
+                                    <div class="qustion-review">
+                                        <p>{{ record.user }}<span>{{ record.score }}</span></p>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+{% endblock %}
+
+{% block script %}
+<script>
+        <!-- chart code will be here -->
+anychart.onDocumentReady(function() {
+    // set the data
+    var data = [
+        {x: "Correct", value: parseInt('{{ model.correct }}')},
+        {x: "Incorrect", value: parseInt('{{ model.incorrect }}')},
+        {x: "Unattempted", value: parseInt('{{ model.total }}')-parseInt('{{ model.correct }}')-parseInt('{{ model.incorrect }}')}
+
+    ];
+
+    // create the chart
+    var chart = anychart.pie();
+
+    // set the chart title
+    chart.title("Test Score Analysis");
+
+    // add the data
+    chart.data(data);
+
+    // display the chart in the container
+    chart.container('container');
+
+    chart.draw();
+});
+    </script>
+
+{% endblock %}

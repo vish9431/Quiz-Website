@@ -1,0 +1,80 @@
+{% extends 'learner/base.html' %}
+{% load static %}
+
+{% block title %}Index {% endblock %}
+
+{% block content %}
+
+<section class="banner">
+        	<div class="banner-img"><img src="{% static 'images/banner/banner-img1.jpg' %}" alt=""></div>
+            <div class="banner-text">
+            	<div class="container">
+                	<h1>Prepare for exams  the smart way</h1>
+                    <p>Search for the keyword and get prepared  </p>
+                    <div class="search-box">
+                    	<input type="text" placeholder="Search here" id="keyword"><br><br>
+                        <select class="form-control" name="source">
+                          <option value="wiki" selected>Wikipedia</option>
+                          <option value="cust">Custom Link</option>
+                        </select>
+                    </div>
+                    <div class="learning-btn">
+                    	<a href="#" class="btn" onclick="redirect()">Start learning now</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+<section class="contact-message">
+        	<div class="container">
+            	<div class="section-title">
+                	<h2>SEND A MESSAGE</h2>
+                </div>
+                <div class="form-filde">
+                    <form action="{% url 'contact' %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="src" value="learner">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="input-box">
+                                    <input type="text" placeholder="Name" data-validation="required" name="name">
+                                </div>
+                                <div class="input-box">
+                                    <input type="text" placeholder="Email" data-validation="required" name="email">
+                                </div>
+                                <div class="input-box">
+                                    <input type="text" placeholder="Subject" data-validation="required" name="subject" >
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="input-box">
+                                    <textarea placeholder="Message" data-validation="required" name="message"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="submit-box">
+                                    <input type="submit" value="SEND" class="btn">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+{% endblock %}
+
+{% block script %}
+
+<script type="text/javascript">
+
+  function redirect() {
+      var src = $('[name="source"]').val();
+      var keyword = $('#keyword').val();
+
+      window.location.href = '/learner/generate?src=' + src + '&q=' + keyword;
+  }
+
+</script>
+
+{% endblock %}

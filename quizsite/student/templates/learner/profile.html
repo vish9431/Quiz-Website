@@ -1,0 +1,161 @@
+{% extends 'learner/base.html' %}
+{% load static %}
+
+{% block title %}Profile{% endblock %}
+
+{% block head %}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.0/chart.js" integrity="sha512-CWVDkca3f3uAWgDNVzW+W4XJbiC3CH84P2aWZXj+DqI6PNbTzXbl1dIzEHeNJpYSn4B6U8miSZb/hCws7FnUZA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+{% endblock %}
+
+{% block content %}
+
+<section class="banner inner-page">
+        	<div class="banner-img"><img src="{% static 'images/banner/account-settings.jpg' %}" alt=""></div>
+            <div class="page-title">
+	            <div class="container">
+                    <h1>Account Settings</h1>
+                </div>
+            </div>
+        </section>
+        <section class="breadcrumb">
+        	<div class="container">
+            	<ul>
+                	<li><a href="/learner">Home</a></li>
+                    <li><a href="/learner/my-profile">Account Settings</a></li>
+                </ul>
+            </div>
+        </section>
+<form method="POST" action="">
+    {% csrf_token %}
+        <div class="my-accountPage">
+        	<div class="container">
+            	<div class="my-account">
+                    <div class="account-tab">
+                        <ul>
+                            <li class="active"><a href="javascript:void(0);" id="profile">Profile</a></li>
+                            <li><a href="javascript:void(0);" id="changePassword">Change Password</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="tab-content profile-con open">
+
+                        <div style="width: 900px; height: 50vh;">
+                            <canvas id="myChart"></canvas>
+                        </div>
+
+
+                        <div class="personal-information change-password">
+                            <div class="input-box">
+                                Name :
+                                <input type="text" placeholder="Name" value="{{ profile.name }}" name="name">
+                            </div>
+                            <br>
+                            <div class="input-box">
+                                Email :
+                                <b>{{ user.email }}</b>
+                            </div>
+                            <br>
+                            <div class="input-box">
+                                Username :
+                                <b>{{ user.username }}</b>
+                            </div>
+                            <br>
+                            <div class="input-box">
+                                Phone Number :
+                                <input type="text" placeholder="Phone Number" value="{{ profile.phone_num }}" name="pnum">
+                            </div>
+                            <br>
+                            <div class="input-box">
+                                Date of Birth :
+                                <input type="text" placeholder="YYYY/MM/DD" value="{{ profile.dob }}" name="dob">
+                            </div>
+                            <br>
+                            <div class="input-box">
+                                Your Bio :
+                                <textarea class="form-control" placeholder="Bio" name="bio">{{ profile.bio }}</textarea>
+                            </div>
+                            <br>
+                            <div class="input-box">
+                                Gender :
+                                <select class="custom-select" id="inputGroupSelect01" name="gender">
+                                    <option value="">Select Gender</option>
+                                    <option value="male" {% if profile.gender == 'male' %}selected{% endif %}>Male</option>
+                                    <option value="female" {% if profile.gender == 'female' %}selected{% endif %}>Female</option>
+                                    <option value="others" {% if profile.gender == 'others' %}selected{% endif %}>Others</option>
+                                  </select>
+                            </div>
+                            <br>
+                            <button class="btn btn-primary my-2 center" type="Submit" name="submit" value="Submit">Submit</button>
+                            <a class="btn btn-primary my-2 center" href="/learner/logout" name="logout">Logout</a>
+                        </div>
+                    </div>
+                    <div class="tab-content changePassword-con">
+                        <div class="change-password ">
+
+                            <div class="input-box">
+                                <input type="text" placeholder="Current Password" name="current-pass">
+                            </div>
+                            <div class="input-box">
+                                <input type="text" placeholder="New Password" name="new-pass">
+                            </div>
+                            <div class="input-box">
+                                <input type="text" placeholder="Confirm Password" name="confirm-pass">
+                            </div>
+                            <div class="submit-box">
+                                <input type="submit" value="save" class="btn" name="save">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+    </form>
+
+
+{% endblock %}
+
+{% block script %}
+<script>
+        let labels = {{ labels|safe }};
+
+        let itemData = {{ rating|safe }};
+
+        const data = {
+            labels: labels,
+            datasets: [{
+                data: itemData,
+                borderColor: 'rgb(33,19,13)',
+                fill: true,
+                hoverBorderColor: 'red'
+            }]
+        };
+
+        const config={
+            type: 'line',
+            data: data,
+            options: {
+                plugins:{
+                    legend: {
+                        display: false
+                    },
+                    title: {
+                        display: true,
+                        text: "Rating"
+                    }
+                }
+             }
+        }
+
+        const chart = new Chart(
+            document.getElementById('myChart'),
+            config
+        );
+
+</script>
+
+{% endblock %}

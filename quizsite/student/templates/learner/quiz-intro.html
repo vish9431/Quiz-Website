@@ -1,0 +1,93 @@
+{% extends 'learner/base.html' %}
+{% load static %}
+
+{% block title %}Take Quiz{% endblock %}
+
+{% block content %}
+
+<section class="banner inner-page">
+        	<div class="banner-img"><img src="{% static 'images/banner/quiz.jpg' %}" alt=""></div>
+            <div class="page-title">
+	            <div class="container">
+                    <h1>Quiz Intro</h1>
+                </div>
+            </div>
+        </section>
+        <section class="breadcrumb white-bg">
+        	<div class="container">
+            	<ul>
+                	<li><a href="/learner">Home</a></li>
+                    <li><a href="/learner/all-quiz">Quiz</a></li>
+                </ul>
+            </div>
+        </section>
+        <section class="quiz-view">
+        	<div class="container">
+                <div class="quiz-title">
+                    <h2>{{ model.title }}</h2>
+                </div>
+                <div class="row">
+                  <div class="col-sm-4 col-md-3">
+                    	<div id="countdown" class="countdownHolder">
+                            <span class="countMinutes">
+                                <span class="position">
+                                    <span class="digit static" id="m-100">{{ t.2 }}</span>
+                                </span>
+                                <span class="position">
+                                    <span class="digit static" id="m-10">{{ t.1 }}</span>
+                                </span>
+                                <span class="position">
+                                    <span class="digit static" id="m-1">{{ t.0 }}</span>
+                                </span>
+                            </span>
+                            <span class="countDiv"></span>
+                            <span class="countSeconds">
+                                <span class="position">
+                                    <span class="digit static">0</span>
+                                </span>
+                                <span class="position">
+                                    <span class="digit static">0</span>
+                                </span>
+                            </span>
+                        </div>
+                        <div class="qustion-list">
+
+                            {% for i in count %}
+                        	<div class="qustion-slide">
+                            	<div class="qustion-number">Question {{ i }}</div>
+                            	<span>1</span>
+                            </div>
+                            {% endfor %}
+
+                        </div>
+                    </div>
+                    <div class="col-sm-8 col-md-9">
+                    	<div class="quiz-intro">
+                        	<h3>Introduction</h3>
+
+                            <p>Created By: <a href="/learner/instructor-profile?user={{ model.user }}">{{ model.user }}</a></p>
+                            <p>Created On: {{ model.created_at }}</p>
+                            <p>Maximum Marks: {{ model.total_marks }}</p>
+                            <p>Difficulty: {{ model.difficulty }}</p>
+                            <br>
+
+                            {% if model.live %}
+                            <p><b>LIVE ({{ live.start_time }} - {{ live.close_time }})</b></p><br>
+                            {% endif %}
+
+                            <p>{{ model.description }}</p>
+                            <form id="form-id" method="POST" action="">
+                                {% csrf_token %}
+
+                            <div class="start-btn">
+                                <button type="submit" class="btn" name="take" value="Take Quiz">Take Quiz</button>
+                            </div>
+                                </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+{% endblock %}

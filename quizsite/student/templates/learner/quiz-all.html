@@ -1,0 +1,60 @@
+{% extends 'learner/base.html' %}
+{% load static %}
+
+{% block title %}All Quiz{% endblock %}
+
+{% block content %}
+
+
+<section class="banner inner-page">
+        	<div class="banner-img"><img src="{% static 'images/banner/courses-banner.jpg' %}" alt=""></div>
+            <div class="page-title">
+	            <div class="container">
+                    <h1>Quiz List</h1>
+                </div>
+            </div>
+        </section>
+        <section class="breadcrumb">
+        	<div class="container">
+            	<ul>
+                	<li><a href="/learner">Home</a></li>
+                    <li><a href="/learner/all-quiz">All Quiz</a></li>
+                </ul>
+            </div>
+        </section>
+        <section class="courses-view list-view">
+        	<div class="container">
+
+                {% for i in quiz_ls %}
+
+                <div class="course-post">
+                    <div class="img">
+                        <img src="{% static 'images/courses/courses-img4.jpg' %}" alt="">
+                        <div class="icon">
+                            <a href="/learner/take-quiz?quiz_id={{ i.id }}"><img src="{% static 'images/book-icon.png' %}" alt=""></a>
+                        </div>
+                        <div class="price">FREE</div>
+                    </div>
+                    <div class="info">
+                        <div class="name">{{ i.title }}</div>
+                        <div class="expert"><span>By </span> {{ i.user }}</div>
+                        <div class="product-footer">
+                            <div class="comment-box">
+                                <div class="box"><i class="fa fa-users"></i>{{ i.attempt_count }} Attempted</div>
+                            </div>
+                            <p>{{ i.tags }}</p>
+                            <div class="view-btn2">
+                                <a href="/learner/take-quiz?quiz_id={{ i.id }}" class="btn">view more</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            	{% endfor %}
+
+            </div>
+        </section>
+
+
+{% endblock %}

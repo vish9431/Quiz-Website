@@ -1,0 +1,140 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Mirrored from design.dev.drcsystems.ooo:8084/themeforest/academy/html/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 19 Dec 2020 08:00:59 GMT -->
+<head>
+    <!-- Meta information -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"><!-- Mobile Specific Metas -->
+
+    <!-- Title -->
+    <title>{% block title %}Test{% endblock %}</title>
+
+    <!-- favicon icon -->
+    <link rel="shortcut icon" href="{% static 'images/Favicon.ico' %}">
+
+    <!-- CSS Stylesheet -->
+    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet"><!-- bootstrap css -->
+    <link href="{% static 'css/owl.carousel.css' %}" rel="stylesheet"><!-- carousel Slider -->
+    <link href="{% static 'css/font-awesome.css' %}" rel="stylesheet"><!-- font awesome -->
+<!--    <link href="{% static 'css/loader.css' %}" rel="stylesheet">&lt;!&ndash;  loader css &ndash;&gt;-->
+    <link href="{% static 'css/docs.css' %}" rel="stylesheet"><!--  template structure css -->
+    <link href="https://fonts.googleapis.com/css?family=Arima+Madurai:100,200,300,400,500,700,800,900%7CPT+Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i" rel="stylesheet">
+
+
+</head>
+
+<body>
+    <div class="wapper">
+        <div class="quck-nav">
+        	<div class="container">
+                <div class="contact-no"><a href="#"><i class="fa fa-globe"></i>The Quiz Emporium</a></div>
+                <div class="quck-right">
+                    <div class="right-link"><a href="/"><i class="fa  fa-user"></i>Home</a></div>
+                </div>
+            </div>
+        </div>
+        <header id="header">
+        	<div class="container">
+                <nav id="nav-main">
+                    <div class="navbar navbar-inverse">
+                        <div class="navbar-header">
+                            <a href="/instructor" class="navbar-brand"><img src="{% static 'images/kt-b.png' %}" alt=""></a>
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                        </div>
+                        <div class="cart-box">
+                        	<a href="/instructor/my-profile"><i class="fa fa-user"></i></a>
+                        </div>
+                        <div class="navbar-collapse collapse">
+                            <ul class="nav navbar-nav">
+                                <li class="sub-menu">
+                                	<a href="/instructor">Home </a>
+                                </li>
+                                <li class="mega-menu sub-menu">
+                                	<a href="/instructor/make-quiz">Make Quiz</a>
+                                </li>
+                                <li class="sub-menu mega-menu">
+                                	<a href="/instructor/quiz-list">My Quiz List</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </header>
+
+        {% block content %}
+
+
+        {% endblock %}
+
+
+                <footer id="footer">
+        	<div class="footer-top">
+            	<div class="container">
+                	<div class="row">
+                        <div class="col-sm-6">
+                        	<div class="row">
+                            	<div class="col-md-offset-1 col-sm-6 col-md-5 col-xs-6">
+                                	<h5>Company</h5>
+                                    <ul class="footer-link">
+                                        <li><a href="/">About Us</a></li>
+                                        <li><a href="/">Contact</a></li>
+                                        <li><a href="/instructor/my-profile">Instructor Profile</a></li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-offset-1 col-sm-6 col-md-5 col-xs-6">
+                                	<h5>Links</h5>
+                                    <ul class="footer-link">
+                                    	<li><a href="/instructor/make-quiz">Make Quiz</a></li>
+                                        <li><a href="/instructor/quiz-list">Quiz List</a></li>
+                                        <li><a href="/instructor">Instructors</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-3">
+                        	<h5>Contact Us</h5>
+                            <div class="contact-view">
+                            	<div class="contact-slide">
+                                	<p><i class="fa fa-location-arrow"></i>IIIT Kottayam  <br>Valavoor, Pala</p>
+                                </div>
+                                <div class="contact-slide">
+                                	<p><i class="fa fa-envelope"></i><a href="mailTo:s.subodh7976@gmail.com">s.subodh7976@gmail.com</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        	<div class="container">
+            	<div class="row">
+                	<div class="col-sm-8">
+            			<div class="copy-right">
+                        	<p>Copyright © <span class="year">2016</span> The Quiz Emporium</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+
+    <script type="text/javascript" src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/bootstrap.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/owl.carousel.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/jquery.form-validator.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/placeholder.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/coustem.js' %}"></script>
+    {% block script %} {% endblock %}
+</body>
+
+</html>

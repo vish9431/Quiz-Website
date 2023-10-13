@@ -1,0 +1,90 @@
+{% extends 'instructor/base.html' %}
+{% load static %}
+
+{% block title %}Quizzes{% endblock %}
+
+{% block content %}
+
+<section class="banner inner-page">
+        	<div class="banner-img"><img src="{% static 'images/banner/courses-banner.jpg' %}" alt=""></div>
+            <div class="page-title">
+	            <div class="container">
+                    <h1>My Quiz List</h1>
+                </div>
+            </div>
+        </section>
+        <section class="breadcrumb">
+        	<div class="container">
+            	<ul>
+                	<li><a href="/instructor">Home</a></li>
+                    <li><a href="/instructor/quiz-list">My Quiz List</a></li>
+                </ul>
+            </div>
+        </section>
+        <div class="user-dashboard">
+        	<div class="container">
+            	<div class="section-title">
+                	<h2>My List</h2>
+                </div>
+                <div class="archived-course">
+
+                  {% for quiz, i in quiz_ls %}
+
+                	<div class="course-list">
+                    	<div class="img">
+                        	<img src="{% static 'images/courses/courses-img4.jpg' %}" alt="">
+                        </div>
+                        <div class="info">
+                        	<div class="name">{{ quiz.title }}</div>
+                            <div class="date">Created On: {{ quiz.created_at }} </div>
+                            {% if quiz.live %}
+                            <div class="date"><b>LIVE</b> ({{ i.start_time }} - {{ i.close_time }})</div>
+                            <div class="date" id="hidden_div-{{ forloop.counter }}" style="display: none;">
+                                Start Time: <input type="datetime-local" id="start-{{ forloop.counter }}" class="form-control" style="width: 30%">
+                                Close Time: <input type="datetime-local" id="close-{{ forloop.counter }}" class="form-control" style="width: 30%"><br>
+                                <input type="hidden" value="{{ quiz.id }}" id="hid-{{ forloop.counter }}">
+                                <input type="submit" value="Change" class="btn" onclick="submitReq({{ forloop.counter }})">
+                                <input type="button" value="Cancel" class="btn" onclick="showDiv('hidden_div-{{ forloop.counter }}', this)">
+                            </div>
+                            {% endif %}
+                            <p>{{ quiz.tags }}</p>
+                            <div class="btn-block">
+                                {% if quiz.live %}
+                                    <button class="btn" onclick="showDiv('hidden_div-{{ forloop.counter }}', this)" value="change">Change Time</button>
+                                {% endif %}
+                                <a href="/instructor/delete-quiz?quiz_id={{ quiz.id }}" class="btn">Delete Quiz</a>
+                                <a href="/instructor/my-quiz?quiz_id={{ quiz.id }}" class="btn">Edit Quiz</a>
+                                <a href="/instructor/quiz-result?quiz_id={{ quiz.id }}" class="btn">Result</a>
+                            </div>
+                        </div>
+                    </div>
+
+                   {% endfor %}
+
+                </div>
+            </div>
+        </div>
+
+
+{% endblock %}
+
+
+{% block script %}
+<script type="text/javascript">
+    function showDiv(divId, element) {
+        if (element.value == 'change')
+            document.getElementById(divId).style.display ='block';
+        else
+            document.getElementById(divId).style.display ='none';
+    }
+
+    function submitReq(count) {
+        st = $('#start-'+count).val();
+        cl = $('#close-'+count).val();
+
+        quiz_id = $('#hid-' + count).val();
+
+        window.location.href = "/instructor/change-time?quiz_id=" + quiz_id + "&start=" + st + "&close=" + cl;
+    }
+</script>
+{% endblock %}

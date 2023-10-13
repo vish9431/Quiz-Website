@@ -1,0 +1,73 @@
+{% extends 'learner/base.html' %}
+{% load static %}
+{% block title %} SignIn or Register {% endblock %}
+
+{% block content %}
+
+<section class="banner inner-page">
+        	<div class="banner-img"><img src="{% static 'images/banner/register-bannerImg.jpg' %}" alt=""></div>
+            <div class="page-title">
+	            <div class="container">
+                    <h1>Login</h1>
+                </div>
+            </div>
+        </section>
+        <section class="breadcrumb">
+        	<div class="container">
+            	<ul>
+                	<li><a href="/">Home</a></li>
+                    <li><a href="/learner/signin">Login & Register</a></li>
+                </ul>
+            </div>
+        </section>
+        <section class="login-view">
+        	<div class="container">
+            	<div class="row">
+                	<div class="col-sm-6">
+                    	<div class="section-title">
+                        	<h2>Login</h2>
+                            <p>Login to your account below</p>
+                        </div>
+                        <form method="POST" action="{% url 'signin' %}">
+                            {% csrf_token %}
+                        <div class="input-box">
+                        	<input type="text" placeholder="User Name" name="username">
+                        </div>
+                        <div class="input-box">
+                        	<input type="password" placeholder="Password" name="password">
+                        </div>
+                        <div class="submit-slide">
+                        	<input type="submit" value="Login" class="btn">
+
+                        </div>
+                            </form>
+                    </div>
+                    <div class="col-sm-6">
+                    	<div class="section-title">
+                        	<h2>REGISTER</h2>
+                            <p>Register now - Completely free</p>
+                        </div>
+                        <form method="POST" action="{% url 'learner-signup' %}">
+                            {% csrf_token %}
+                        <div class="input-box">
+                        	<input type="text" placeholder="User Name" name="reg-username">
+                        </div>
+                        <div class="input-box">
+                        	<input type="text" placeholder="Email" name="reg-email">
+                        </div>
+                        <div class="input-box">
+                        	<input type="password" placeholder="Password" name="reg-password1">
+                        </div>
+                        <div class="input-box">
+                        	<input type="password" placeholder="Re-Password" name="reg-password2">
+                        </div>
+                        <div class="submit-slide">
+                        	<input type="submit" value="SIGN UP" class="btn">
+                        </div>
+                            </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends 'learner/base.html' %}
+{% load static %}
+
+{% block title %}Instructors{% endblock %}
+
+{% block content %}
+
+<section class="banner inner-page">
+        	<div class="banner-img"><img src="{% static 'images/banner/ourTeacher-banner.jpg' %}" alt=""></div>
+            <div class="page-title">
+	            <div class="container">
+                    <h1>OUR INSTRUCTOR</h1>
+                </div>
+            </div>
+        </section>
+        <section class="breadcrumb">
+        	<div class="container">
+            	<ul>
+                	<li><a href="/learner">Home</a></li>
+                    <li><a href="/learner/instructor-list">Our Instructor</a></li>
+                </ul>
+            </div>
+        </section>
+        <section class="our-teacher">
+        	<div class="container">
+            	<div class="row">
+
+                  {% for i in data %}
+                	<div class="col-sm-6 col-md-3">
+                    	<div class="teacher-box">
+                        	<div class="img">
+                            	<img src="{% static 'images/team-member/user-blank.png' %}" alt="">
+                            </div>
+                            <div class="info">
+                            	<div class="name"><a href="/learner/instructor-profile?user={{ i.user.username }}">{{ i.user.username }}</a></div>
+                                <div class="designation">{{ i.name }}</div>
+                                <p>{{ i.bio }}</p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+
+                </div>
+            </div>
+        </section>
+
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends 'learner/base.html' %}
+{% load static %}
+
+{% block title %}Quizzes{% endblock %}
+
+{% block content %}
+
+<section class="banner inner-page">
+        	<div class="banner-img"><img src="{% static 'images/banner/courses-banner.jpg' %}" alt=""></div>
+            <div class="page-title">
+	            <div class="container">
+                    <h1>My List</h1>
+                </div>
+            </div>
+        </section>
+        <section class="breadcrumb">
+        	<div class="container">
+            	<ul>
+                	<li><a href="/learner">Home</a></li>
+                    <li><a href="/learner/quiz-list">My List</a></li>
+                </ul>
+            </div>
+        </section>
+        <div class="user-dashboard">
+        	<div class="container">
+            	<div class="section-title">
+                	<h2>My Attempts</h2>
+                </div>
+                <div class="archived-course">
+
+                  {% for quiz in quiz_ls %}
+
+                	<div class="course-list">
+                    	<div class="img">
+                        	<img src="{% static 'images/courses/courses-img4.jpg' %}" alt="">
+                        </div>
+                        <div class="info">
+                        	<div class="name">{{ quiz.title }}</div>
+                            <div class="date">Created On: {{ quiz.created_at }} </div>
+                            <p>{{ quiz.tags }}</p>
+                            <div class="btn-block">
+                                <a href="/learner/quiz-result?quiz_id={{ quiz.id }}" class="btn">Show Result</a>
+                                <a href="/learner/take-quiz?quiz_id={{ quiz.id }}" class="btn">Re-Attempt</a>
+                            </div>
+                        </div>
+                    </div>
+
+                   {% endfor %}
+
+                </div>
+            </div>
+        </div>
+
+
+{% endblock %}

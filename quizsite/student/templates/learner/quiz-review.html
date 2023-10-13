@@ -1,0 +1,66 @@
+{% extends 'learner/base.html' %}
+{% load static %}
+
+{% block title %}Quiz{% endblock %}
+
+{% block content %}
+
+<section class="banner inner-page" xmlns="http://www.w3.org/1999/html">
+            <div class="banner-img"><img src="{% static 'images/banner/quiz.jpg' %}" alt=""></div>
+            <div class="page-title">
+                <div class="container">
+                    <h1>Quiz</h1>
+                </div>
+            </div>
+        </section>
+        <section class="breadcrumb white-bg">
+            <div class="container">
+                <ul>
+                    <li><a href="/learner">Home</a></li>
+                    <li><a href="/learner/all-quiz">Quiz</a></li>
+                </ul>
+            </div>
+        </section>
+        <section class="quiz-view">
+            <div class="container">
+                <div class="quiz-title">
+                    <h2>{{ model.title }}</h2>
+                </div>
+                <div class="row">
+                   <div>
+                    	<div class="qustion-main">
+
+                            {% for s in data %}
+
+                            <div class="qustion-box">
+                                <div class="qustion">Question {{ forloop.counter }}: {{ s.question }}</div>
+                                <div class="ans">
+                                	<div class="ans-slide">
+                                    	<label class="label_radio" for="radio-01" style="{% if s.options.0 == s.correct %}color: green; font-weight: bold;{% elif s.options.0 == s.user %}color: #c72c34; font-weight: bold;{% endif %}"><input name="options-{{ forloop.counter }}" id="radio-01" value="{{ s.options.0 }}" type="radio" disabled
+                                        {% if s.options.0 == s.user %} checked {% endif %}>{{ s.options.0 }}</label>
+                                    </div>
+                                    <div class="ans-slide">
+                                    	<label class="label_radio" for="radio-02" style="{% if s.options.1 == s.correct %}color: green; font-weight: bold;{% elif s.options.1 == s.user %}color: #c72c34; font-weight: bold;{% endif %}"><input name="options-{{ forloop.counter }}" id="radio-02" value="{{ s.options.1 }}" type="radio" disabled
+                                        {% if s.options.1 == s.user %} checked {% endif %}>{{ s.options.1 }}</label>
+                                    </div>
+                                    <div class="ans-slide">
+                                    	<label class="label_radio" for="radio-03" style="{% if s.options.2 == s.correct %}color: green; font-weight: bold;{% elif s.options.2 == s.user %}color: #c72c34; font-weight: bold;{% endif %}"><input name="options-{{ forloop.counter }}" id="radio-03" value="{{ s.options.2 }}" type="radio" disabled
+                                        {% if s.options.2 == s.user %} checked {% endif %}>{{ s.options.2 }}</label>
+                                    </div>
+                                    <div class="ans-slide">
+                                    	<label class="label_radio" for="radio-04" style="{% if s.options.3 == s.correct %}color: green; font-weight: bold;{% elif s.options.3 == s.user %}color: #c72c34; font-weight: bold;{% endif %}"><input name="options-{{ forloop.counter }}" id="radio-04" value="{{ s.options.3 }}" type="radio" disabled
+                                        {% if s.options.3 == s.user %} checked {% endif %}>{{ s.options.3 }}</label>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            {% endfor %}
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+{% endblock %}

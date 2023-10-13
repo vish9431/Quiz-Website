@@ -1,0 +1,80 @@
+{% extends 'instructor/base.html' %}
+{% load static %}
+
+{% block title %}Quiz{% endblock %}
+
+{% block content %}
+
+<section class="banner inner-page">
+            <div class="banner-img"><img src="{% static 'images/banner/quiz.jpg' %}" alt=""></div>
+            <div class="page-title">
+                <div class="container">
+                    <h1>Quiz</h1>
+                </div>
+            </div>
+        </section>
+        <section class="breadcrumb white-bg">
+            <div class="container">
+                <ul>
+                    <li><a href="/instructor">Home</a></li>
+                    <li><a href="/instructor/quiz-list">Quiz</a></li>
+                </ul>
+            </div>
+        </section>
+        <section class="quiz-view">
+            <div class="container">
+                <div class="quiz-title">
+                    <h2>{{ quiz_model.title }}</h2>
+                </div>
+                <div class="row">
+
+                        <div class="qustion-main">
+                            <form method="POST" action="">
+                            {% for i in data %}
+                                <div class="qustion-box">
+                                    <div class="qustion "><b>Question {{ forloop.counter }}:  </b><textarea class="form-control" name="ques-{{ forloop.counter }}"
+                                            placeholder="Question {{ forloop.counter }}: " >{{ i.question }}</textarea></div>
+                                    <div class="qustion"><b>Mark: <label>{{ i.mark }}</label></b>
+                                    <input type="hidden" class="form-control" name="mark-{{ forloop.counter }}" size="10" style="width: 10%;" value="{{ i.mark }}" required></div>
+                                    <div class="ans">
+                                        <br />
+                                        <div class="ans-slide">
+                                            <label for="text-{{ forloop.counter }}-1">Option 1:  <input type="text" class="form-control" name="option1-{{ forloop.counter }}" size="40"
+                                                    placeholder="Option 1: " value="{{ i.options.0 }}" id="text-{{ forloop.counter }}-1">
+                                            </label><br />
+                                        </div>
+                                        <div class="ans-slide">
+                                            <label for="text-{{ forloop.counter }}-2">Option 2:  <input type="text" class="form-control" name="option2-{{ forloop.counter }}" size="40"
+                                                placeholder="Option 2: " value="{{ i.options.1 }}" id="text-{{ forloop.counter }}-2">
+                                        </label><br />
+                                        </div>
+                                        <div class="ans-slide">
+                                            <label for="text-{{ forloop.counter }}-3">Option 3:  <input type="text" class="form-control" name="option3-{{ forloop.counter }}" size="40"
+                                                placeholder="Option 3: " value="{{ i.options.2 }}" id="text-{{ forloop.counter }}-3">
+                                        </label><br />
+                                        </div>
+                                        <div class="ans-slide">
+                                            <label for="text-{{ forloop.counter }}-4">Option 4:  <input type="text" class="form-control" name="option4-{{ forloop.counter }}" size="40"
+                                                placeholder="Option 4: " value="{{ i.options.3 }}" id="text-{{ forloop.counter }}-4">
+                                        </label><br />
+                                        </div>
+                                        <div class="ans-slide">
+                                            <label for="text-{{ forloop.counter }}-5">Answer:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" class="form-control" name="ans-{{ forloop.counter }}" size="40"
+                                                placeholder="Answer: " value="{{ i.correct }}" id="text-{{ forloop.counter }}-5">
+                                        </label><br />
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+
+                                {% csrf_token %}
+                            <div class="submit-quiz">
+                                <button class="btn" name="submit" value="Submit Quiz">Submit Quiz</button>
+                            </div>
+                                </form>
+                        </div>
+                </div>
+            </div>
+        </section>
+
+{% endblock %}

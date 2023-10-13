@@ -1,0 +1,119 @@
+{% extends 'learner/base.html' %}
+{% load static %}
+
+{% block title %}Quiz{% endblock %}
+
+{% block content %}
+
+<section class="banner inner-page" xmlns="http://www.w3.org/1999/html">
+            <div class="banner-img"><img src="{% static 'images/banner/quiz.jpg' %}" alt=""></div>
+            <div class="page-title">
+                <div class="container">
+                    <h1>Quiz</h1>
+                </div>
+            </div>
+        </section>
+        <section class="breadcrumb white-bg">
+            <div class="container">
+                <ul>
+                    <li><a href="/learner">Home</a></li>
+                </ul>
+            </div>
+        </section>
+        <section class="quiz-view">
+            <div class="container">
+                <div class="quiz-title">
+                    <h2>{{ src }}</h2>
+                </div>
+                <div class="row">
+
+                    </div>
+                    <div>
+                    	<div class="qustion-main">
+                                {% csrf_token %}
+
+                            {% for s in data %}
+
+                            <div class="qustion-box">
+                                <div class="qustion">Question {{ forloop.counter }}: {{ s.question }}</div>
+                                <div class="ans">
+                                	<div class="ans-slide">
+                                    	<label class="label_radio" for="radio-{{ forloop.counter }}-1"><input name="options-{{ forloop.counter }}" id="radio-{{ forloop.counter }}-1" value="{{ s.options.0 }}" type="radio">{{ s.options.0 }}</label>
+                                    </div>
+                                    <div class="ans-slide">
+                                    	<label class="label_radio" for="radio-{{ forloop.counter }}-2"><input name="options-{{ forloop.counter }}" id="radio-{{ forloop.counter }}-2" value="{{ s.options.1 }}" type="radio">{{ s.options.1 }}</label>
+                                    </div>
+                                    <div class="ans-slide">
+                                    	<label class="label_radio" for="radio-{{ forloop.counter }}-3"><input name="options-{{ forloop.counter }}" id="radio-{{ forloop.counter }}-3" value="{{ s.options.2 }}" type="radio">{{ s.options.2 }}</label>
+                                    </div>
+                                    <div class="ans-slide">
+                                    	<label class="label_radio" for="radio-{{ forloop.counter }}-4"><input name="options-{{ forloop.counter }}" id="radio-{{ forloop.counter }}-4" value="{{ s.options.3 }}" type="radio">{{ s.options.3 }}</label>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            {% endfor %}
+
+                            <div class="submit-quiz">
+                            	<input type="submit" class="btn" value="Submit Quiz" name="submit" id="submit">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+{% endblock %}
+
+{% block script %}
+
+<script type="text/javascript">
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+const csrftoken = getCookie('csrftoken');
+
+    $('#submit').click(function() {
+        $.ajaxSetup({
+  data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
+});
+            $.ajax({
+            type: "POST",
+            url: "/learner/generate",
+            dataType: "json",
+            data: { csrfmiddlewaretoken: '{{ csrf_token }}'},
+            success: function(result) {
+
+                var opt = result.answers
+                for(let i=1; i <= result.count; i++) {
+                    for (let j=1; j <= 4; j++) {
+                        var id_el = 'radio-'+i+'-'+j;
+                        if ($('#'+id_el).is(':checked')) {
+                            $('label[for="'+id_el+'"]').css('color', 'red');
+                            $('label[for="'+id_el+'"]').css('font-weight', 'bold');
+                        }
+                        if ($('#'+id_el).val() == opt[i-1]) {
+                            $('label[for="'+id_el+'"]').css('color', 'green');
+                            $('label[for="'+id_el+'"]').css('font-weight', 'bold');
+                        }
+                    }
+                }
+            }
+            });
+    });
+</script>
+
+{% endblock %}

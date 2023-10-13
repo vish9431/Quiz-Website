@@ -1,0 +1,143 @@
+{% extends 'learner/base.html' %}
+{% load static %}
+
+{% block title %}Quiz{% endblock %}
+
+{% block content %}
+
+<section class="banner inner-page" xmlns="http://www.w3.org/1999/html">
+            <div class="banner-img"><img src="{% static 'images/banner/quiz.jpg' %}" alt=""></div>
+            <div class="page-title">
+                <div class="container">
+                    <h1>Quiz</h1>
+                </div>
+            </div>
+        </section>
+        <section class="breadcrumb white-bg">
+            <div class="container">
+                <ul>
+                    <li><a href="/learner">Home</a></li>
+                    <li><a href="/learner/quiz-list">Quiz</a></li>
+                </ul>
+            </div>
+        </section>
+        <section class="quiz-view">
+            <div class="container">
+                <div class="quiz-title">
+                    <h2>{{ model.title }}</h2>
+                </div>
+                <div class="row">
+
+                        <div class="col-sm-4 col-md-3">
+                    	<div id="countdown" class="countdownHolder">
+                            <span class="countMinutes">
+                                <span class="position">
+                                    <span class="digit static" id="m-100">{{ t.2 }}</span>
+                                </span>
+                                <span class="position">
+                                    <span class="digit static" id="m-10">{{ t.1 }}</span>
+                                </span>
+                                <span class="position">
+                                    <span class="digit static" id="m-1">{{ t.0 }}</span>
+                                </span>
+                            </span>
+                            <span class="countDiv"></span>
+                            <span class="countSeconds">
+                                <span class="position">
+                                    <span class="digit static" id="s-10">0</span>
+                                </span>
+                                <span class="position">
+                                    <span class="digit static" id="s-1">0</span>
+                                </span>
+                            </span>
+                        </div>
+
+                    </div>
+                    <div class="col-sm-8 col-md-9">
+                    	<div class="qustion-main">
+                            <form method="POST" action="">
+                                {% csrf_token %}
+
+                            {% for s in set %}
+
+                            <div class="qustion-box">
+                                <div class="qustion">Question {{ forloop.counter }}: {{ s.question }}</div>
+                                <div class="ans">
+                                	<div class="ans-slide">
+                                    	<label class="label_radio" for="radio-{{ forloop.counter }}-01"><input name="options-{{ forloop.counter }}" id="radio-{{ forloop.counter }}-01" value="{{ s.options.0 }}" type="radio">{{ s.options.0 }}</label>
+                                    </div>
+                                    <div class="ans-slide">
+                                    	<label class="label_radio" for="radio-{{ forloop.counter }}-02"><input name="options-{{ forloop.counter }}" id="radio-{{ forloop.counter }}-02" value="{{ s.options.1 }}" type="radio">{{ s.options.1 }}</label>
+                                    </div>
+                                    <div class="ans-slide">
+                                    	<label class="label_radio" for="radio-{{ forloop.counter }}-03"><input name="options-{{ forloop.counter }}" id="radio-{{ forloop.counter }}-03" value="{{ s.options.2 }}" type="radio">{{ s.options.2 }}</label>
+                                    </div>
+                                    <div class="ans-slide">
+                                    	<label class="label_radio" for="radio-{{ forloop.counter }}-04"><input name="options-{{ forloop.counter }}" id="radio-{{ forloop.counter }}-04" value="{{ s.options.3 }}" type="radio">{{ s.options.3 }}</label>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            {% endfor %}
+
+                            <div class="submit-quiz">
+                            	<input type="submit" class="btn" value="Submit Quiz" name="submit" id="submit">
+                            </div>
+                                </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+{% endblock %}
+
+{% block script %}
+
+<script type="text/javascript">
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+const csrftoken = getCookie('csrftoken');
+
+    $(document).ready(function() {
+
+        window.setInterval(function() {
+        $.ajaxSetup({
+  data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
+});
+            $.ajax({
+            type: "POST",
+            url: "/learner/countdown",
+            dataType: "json",
+            data: { m: $('#m-100').text()+$('#m-10').text()+$('#m-1').text(), s: $('#s-10').text()+$('#s-1').text(), csrfmiddlewaretoken: '{{ csrf_token }}'},
+            success: function(result) {
+                if (result.sub == false) {
+                    $('#m-100').text(result.m_100);
+                    $('#m-10').text(result.m_10);
+                    $('#m-1').text(result.m_1);
+                    $('#s-10').text(result.s_10);
+                    $('#s-1').text(result.s_1);
+                } else {
+                    $('#submit').click();
+                }
+            }
+            });
+        }, 1000);
+    });
+</script>
+
+{% endblock %}
